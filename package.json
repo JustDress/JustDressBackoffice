@@ -1,32 +1,35 @@
 {
-  "name": "just-dress",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/simoneP93/justdress-backoffice"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/simoneP93/justdress-backoffice/issues"
-  },
-  "homepage": "https://github.com/simoneP93/justdress-backoffice#readme",
-  "dependencies": {
-    "angular-animate": "^1.5.9",
-    "angular-aria": "^1.5.9",
-    "angular-material": "^1.1.1",
-    "toastr": "^2.1.2"
-  },
-  "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-angular-templatecache": "^2.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^2.1.2"
-  }
+    "name": "just-dress",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/simoneP93/justdress-backoffice"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/simoneP93/justdress-backoffice/issues"
+    },
+    "homepage": "https://github.com/simoneP93/justdress-backoffice#readme",
+    "dependencies": {
+        "angular-animate": "^1.5.9",
+        "angular-aria": "^1.5.9",
+        "angular-material": "^1.1.1",
+        "toastr": "^2.1.2"
+    },
+    "devDependencies": {
+        "browser-sync": "^2.18.8",
+        "gulp": "^3.9.1",
+        "gulp-angular-templatecache": "^2.0.0",
+        "gulp-concat": "^2.6.1",
+        "gulp-connect": "^5.0.0",
+        "gulp-rename": "^1.2.2",
+        "gulp-uglify": "^2.1.2",
+        "jshint-stylish": "^1.0.0"
+    }
 }

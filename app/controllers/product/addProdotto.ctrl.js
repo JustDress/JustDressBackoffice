@@ -28,10 +28,12 @@ app.controller('addProdotto', ['$scope', '$http', 'productSvc', 'TOASTRUTIL',
             console.log(user);
             var resList = [];
             // resList.push()
-            productSvc.addProduct(user, false, function(res) {
-                console.log(res);
-                $scope.product = {};
-                toastr.success('Prodotto aggiunto correttamente!')
+            var interval = setInterval(function() {
+                productSvc.addProduct(user, false, function(res) {
+                    console.log(res);
+                    $scope.product = {};
+                    toastr.success('Prodotto aggiunto correttamente!')
+                }, 100);
             });
         }
 

@@ -20,6 +20,9 @@ db.once('open', function() {
 //Models
 var Product = require('./app/models/product');
 
+var BackOfficeUser = require('./app/models/backOfficeUser');
+
+
 // ROUTES FOR OUR API
 // =============================================================================
 var router = express.Router(); // get an instance of the express Router

@@ -1,4 +1,4 @@
-var app = angular.module('justDressApp', ['ngRoute', 'ngMaterial', 'ngSanitize', 'ngMdIcons', 'mdDataTable', 'angularSpinners']);
+var app = angular.module('justDressApp', ['ngRoute', 'ngMaterial', 'ngSanitize', 'ngMdIcons', 'mdDataTable', 'angularSpinners', 'md.data.table']);
 
 app.config(["$routeProvider", '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.
@@ -10,8 +10,12 @@ app.config(["$routeProvider", '$locationProvider', function($routeProvider, $loc
          * Prodotti
          */
     when('/profile', {
-            templateUrl: 'app/views/profile/profile.html',
-            // controller: 'profile'
+        templateUrl: 'app/views/profile/profile.html',
+        // controller: 'profile'
+    }).
+    when('/mdTable', {
+            templateUrl: 'app/views/mdDataTable/mdDataTable.html',
+            controller: 'nutritionController'
         }).
         /**
          * Prodotti
@@ -72,6 +76,14 @@ app.config(["$routeProvider", '$locationProvider', function($routeProvider, $loc
 
 
     // $locationProvider.html5mode(true);
+}]);
+
+app.config(['$mdThemingProvider', function($mdThemingProvider) {
+    'use strict';
+
+    $mdThemingProvider.theme('default')
+        .primaryPalette('blue')
+        .accentPalette('pink');
 }]);
 
 app.run(['$templateCache', function($templateCache) {

@@ -38,7 +38,7 @@ function ItemsTableController($timeout) {
 
 
 app.component('itemsTable', {
-    templateUrl: 'app/component/itemsTable/itemsTable.html',
+    templateUrl: 'app/component/itemsTable/tabletest.html',
     controller: ItemsTableController,
     bindings: {
         listItems: '=',

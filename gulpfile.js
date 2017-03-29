@@ -15,7 +15,25 @@ var
     rename = require('gulp-rename'),
     uglify = require('gulp-uglify');
 
+var connect = require('gulp-connect');
 
+gulp.task('connect', function() {
+    connect.server({
+        root: 'app',
+        livereload: true
+    });
+});
+
+gulp.task('html', function() {
+    gulp.src('./app/*.html')
+        .pipe(connect.reload());
+});
+
+gulp.task('watch', function() {
+    gulp.watch(['./app/*.html'], ['html']);
+});
+
+gulp.task('default', ['connect', 'watch']);
 // var jsFiles = 'app/controllers/*.js',
 //     jsDest = 'dist/scripts';
 // // console.log(jsFiles);
@@ -28,9 +46,9 @@ var
 //         .pipe(gulp.dest(jsDest));
 // });
 
-gulp.task('default', function() {
-    return gulp.src('app/views/**/*.html')
-        .pipe(templateCache())
-        .pipe(gulp.dest('public'));
-});
+// gulp.task('default', function() {
+//     return gulp.src('app/views/**/*.html')
+//         .pipe(templateCache())
+//         .pipe(gulp.dest('public'));
+// });
 // development mode?

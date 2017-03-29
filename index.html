@@ -27,8 +27,8 @@
     <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
     <!--[if lte IE 6]><link rel="stylesheet" href="css/ie6.css" type="text/css" media="all" /><![endif]-->
     <script src="js/jquery-1.4.1.min.js" type="text/javascript"></script>
-    <script src="js/jquery.jcarousel.pack.js" type="text/javascript"></script>
-    <script src="js/jquery-func.js" type="text/javascript"></script>
+    <!--<script src="js/jquery.jcarousel.pack.js" type="text/javascript"></script>-->
+    <!--<script src="js/jquery-func.js" type="text/javascript"></script>-->
     <script src="node_modules/angular/angular.min.js"></script>
     <script src="node_modules/angular/ng-route.js"></script>
     <script src="node_modules/angular-animate/angular-animate.min.js"></script>
@@ -46,6 +46,18 @@
     <link href="node_modules/toastr/build/toastr.min.css" rel="stylesheet" />
     <script src="node_modules/toastr/build/toastr.min.js"></script>
 
+
+    <!--Material Icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Underscore-->
+    <script src="node_modules/underscore/underscore-min.js"></script>
+
+    <!--md-data-table-->
+    <link href="js/md-data-table/md-data-table.min.css" rel="stylesheet" />
+    <script src="js/md-data-table/md-data-table.min.js"></script>
+
+
     <script src="app/main.js"></script>
     <script src="app/controllers/home/controllerHome.js"></script>
     <script src="app/services/product/productService.js"></script>
@@ -61,6 +73,12 @@
     <script src="app/component/menuItemSidebar/menuItemSidebar.component.js"></script>
     <script src="app/component/itemsTable/itemsTable.component.js"></script>
     <script src="app/controllers/customers/customer.ctrl.js"></script>
+    <script src="app/controllers/nutrition.ctrl.js"></script>
+    <script src="css/app.less"></script>
+    <script src="css/app.css"></script>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.7.2/less.min.js"></script>
 
 
 
@@ -158,13 +176,37 @@
     <script src="js/flot/jquery.flot.spline.js"></script>
     <script src="js/flot/curvedLines.js"></script>
     <!-- jVectorMap -->
-    <script src="js/maps/jquery-jvectormap-2.0.3.min.js"></script>
+    <!--<script src="js/maps/jquery-jvectormap-2.0.3.min.js"></script>-->
     <!-- bootstrap-daterangepicker -->
     <script src="js/moment/moment.min.js"></script>
     <script src="js/datepicker/daterangepicker.js"></script>
 
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
+
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- Datatables -->
+    <script src="../vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="../vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="../vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="../vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="../vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="../vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="../vendors/datatables.net-scroller/js/datatables.scroller.min.js"></script>
+    <script src="../vendors/jszip/dist/jszip.min.js"></script>
+    <script src="../vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="../vendors/pdfmake/build/vfs_fonts.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>
+
+    <!-- /Datatables -->
 
     <!-- Flot -->
     <script>
@@ -243,7 +285,7 @@
     <!-- /Flot -->
 
     <!-- jVectorMap -->
-    <script src="js/maps/jquery-jvectormap-world-mill-en.js"></script>
+    <!--<script src="js/maps/jquery-jvectormap-world-mill-en.js"></script>
     <script src="js/maps/jquery-jvectormap-us-aea-en.js"></script>
     <script src="js/maps/gdp-data.js"></script>
     <script>
@@ -264,7 +306,7 @@
                 }
             });
         });
-    </script>
+    </script>-->
     <!-- /jVectorMap -->
 
     <!-- Skycons -->
@@ -289,7 +331,7 @@
     <!-- /Skycons -->
 
     <!-- Doughnut Chart -->
-    <script>
+    <!--<script>
         $(document).ready(function() {
             var options = {
                 legend: false,
@@ -328,7 +370,7 @@
                 options: options
             });
         });
-    </script>
+    </script>-->
     <!-- /Doughnut Chart -->
 
     <!-- bootstrap-daterangepicker -->
@@ -406,7 +448,7 @@
     <!-- /bootstrap-daterangepicker -->
 
     <!-- gauge.js -->
-    <script>
+    <!--<script>
         var opts = {
             lines: 12,
             angle: 0,
@@ -429,7 +471,7 @@
         gauge.animationSpeed = 32;
         gauge.set(3200);
         gauge.setTextField(document.getElementById("gauge-text"));
-    </script>
+    </script>-->
     <!-- /gauge.js -->
 </body>
 
