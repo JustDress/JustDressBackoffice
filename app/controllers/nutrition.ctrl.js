@@ -289,6 +289,7 @@ app.controller('nutritionController', ['$scope', '$q', '$http', 'productSvc', '$
         }
 
 
+        //todo: trovare un modo per non cancellare definitivamente le proprietà del filtro
         function deleteNullFilterProperty() {
             var hasNullValue = false;
             // _.keys({ one: 1, two: 2, three: 3 })
