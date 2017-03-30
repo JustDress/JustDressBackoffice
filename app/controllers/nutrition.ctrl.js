@@ -152,8 +152,8 @@
 //     };
 
 //     $scope.onPaginate = function(page, limit) {
-//         console.log('Scope Page: ' + $scope.query.page + ' Scope Limit: ' + $scope.query.limit);
-//         console.log('Page: ' + page + ' Limit: ' + limit);
+//         //console.log('Scope Page: ' + $scope.query.page + ' Scope Limit: ' + $scope.query.limit);
+//         //console.log('Page: ' + page + ' Limit: ' + limit);
 
 //         $scope.promise = $timeout(function() {
 
@@ -161,11 +161,11 @@
 //     };
 
 //     $scope.deselect = function(item) {
-//         console.log(item.name, 'was deselected');
+//         //console.log(item.name, 'was deselected');
 //     };
 
 //     $scope.log = function(item) {
-//         console.log(item.name, 'was selected');
+//         //console.log(item.name, 'was selected');
 //     };
 
 //     $scope.loadStuff = function() {
@@ -176,8 +176,8 @@
 
 //     $scope.onReorder = function(order) {
 
-//         console.log('Scope Order: ' + $scope.query.order);
-//         console.log('Order: ' + order);
+//         //console.log('Scope Order: ' + $scope.query.order);
+//         //console.log('Order: ' + order);
 
 //         $scope.promise = $timeout(function() {
 
@@ -185,31 +185,42 @@
 //     };
 
 // }]);
-app.controller('nutritionController', ['$scope', '$q', '$http', 'productSvc', '$timeout',
-    function($scope, $q, $http, productSvc, $timeout) {
+
+
+
+
+app.controller('nutritionController', ['$scope', '$q', '$http', 'productSvc', '$timeout', 'TOASTRUTIL',
+    function($scope, $q, $http, productSvc, $timeout, TOASTRUTIL) {
         'use strict';
 
+        toastr.options = TOASTRUTIL.options;
+        //todo: move to service-->get api-->db
+        $scope.categorie = [{ nome: 'felpa', id: 1 }, { nome: 'tshirt', id: 2 }];
+
+        var initialProductList = [];
+        var initialFilter = {};
         $scope.selected = [];
         $scope.openFilter = false;
         $scope.openSearch = false;
+        // $scope.search = null;
         $scope.query = {
             order: 'name',
-            limit: 5,
+            limit: 10,
             page: 1
         };
 
-        function success(desserts) {
-            console.log(desserts);
-            // $scope.desserts = desserts;
-            $scope.productList = desserts;
-            console.log(desserts);
-        }
+        $scope.filter = { nome: "", prezzo: null, quantita: null, sesso: "", categoria: "" };
+
+
+
 
         $scope.init = function() {
-            console.log('entra');
+            //console.log('entra');
             $scope.getDesserts();
-
+            initialFilter = $scope.filter;
         }
+
+
         $scope.loadStuff = function() {
             load();
         };
@@ -221,35 +232,145 @@ app.controller('nutritionController', ['$scope', '$q', '$http', 'productSvc', '$
             $scope.openSearch = !$scope.openSearch;
         }
 
-        function load() {
-            $scope.promise = $timeout(function() {
+        // Define a callback function.  
 
-            }, 2000);
+        $scope.getCategoryDescription = function(id) {
+            // return $scope.categorie.
+            return _.where($scope.categorie, { id: id })[0].nome;
         }
+
+        $scope.filterList = function() {
+
+            // console.log($scope.filter);
+            // console.log(checkNullFilter());
+            if (checkNullFilter())
+                return;
+            console.log('passa');
+            if (deleteNullFilterProperty()) {
+                console.log(initialProductList);
+
+                $scope.productList = _.where(initialProductList, $scope.filter);
+            } else {
+                // var filterNotNull = getFilterNotNull();
+                console.log(initialProductList);
+                // console.log(filterNotNull)
+                $scope.productList = initialProductList.filter(checkFilter);
+
+                console.log($scope.productList);
+                // $scope.$apply();
+                // var filter = $.grep($scope.productList, function(prod) {
+                //     return
+                //     prod.nome == $scope.filter.nome
+                // })
+            }
+        }
+
+        // function getFilterNotNull() {
+        //     console.log(returnNullFilter())
+        //     _.omit($scope.filter, returnNullFilter());
+
+        // }
+
+        function checkNullFilter() {
+            // for (var key in $scope.filter) {
+            //     if ($scope.filter[key] !== null && $scope.filter[key] != "")
+            //         return false;
+            // }
+            // return true;
+            console.log($scope.filter);
+            var nullFilter = { nome: "", prezzo: null, quantita: null, sesso: "", categoria: "" };
+
+            if (JSON.stringify(nullFilter) === JSON.stringify($scope.filter)) {
+                return true;
+            } else
+                return false;
+
+            // _.each(_.values($scope.filter), checkNullOrEmpty);
+        }
+
+
+        function deleteNullFilterProperty() {
+            var hasNullValue = false;
+            // _.keys({ one: 1, two: 2, three: 3 })
+            for (var key in $scope.filter) {
+                // debugger;
+                if ($scope.filter[key] == null || $scope.filter[key] == "") {
+                    console.log(key)
+                    $scope.filter = _.omit($scope.filter, key);
+                    // console.log($scope.filter);
+                    hasNullValue = true;
+                }
+
+            }
+            console.log($scope.filter);
+
+            return hasNullValue;
+        }
+
+        function checkFilter(value) {
+            if (value.nome == $scope.filter.nome || value.sesso == $scope.filter.sesso ||
+                value.categoria == $scope.filter.categoria ||
+                value.prezzo == $scope.filter.prezzo)
+                return true;
+            else return false;
+        }
+
 
         $scope.getQuery = function() {
             load();
             var stooges = [{ name: 'moe', age: 40 }, { name: 'larry', age: 50 }, { name: 'curly', age: 60 }];
             _.sortBy(stooges, 'name');
-            console.log($scope.query);
+            //console.log($scope.query);
             // $scope.$apply();
+        }
+        $scope.search = {
+            name: ""
+        }
+
+        $scope.deleteProduct = function() {
+
+            angular.forEach($scope.selected, function(prod) {
+                    productSvc.deleteProduct(prod, false, function(res) {
+                        //console.log(res);
+                        toastr.success('Prodotto ' + prod.nome + '  eliminato correttamente!');
+                        $scope.selected.splice($scope.selected.indexOf(prod), 1);
+                        $scope.$broadcast("updateProduct");
+                    });
+                })
+                //console.log($scope.selected);
         }
 
         $scope.getDesserts = function() {
-            console.log('entra');
+            //console.log('entra');
             getPromise().then(function(res) {
-                console.log(res);
+                //console.log(res);
                 // success(res.data.data);
                 success(res);
 
             });
         };
 
+
+
+        function load() {
+            $scope.promise = $timeout(function() {
+
+            }, 1000);
+        }
+
+        function success(desserts) {
+            //console.log(desserts);
+            // $scope.desserts = desserts;
+            $scope.productList = desserts;
+            initialProductList = desserts;
+            //console.log(desserts);
+        }
+
         function getPromise() {
             $scope.promise = $q.defer();
             // debugger;
             // $http.get('desserts.json').then(function(res) {
-            //     // console.log(res);
+            //     // //console.log(res);
             //     $scope.promise.resolve(res);
             // });
             $http.get('/api/product').success(function(data) {
@@ -259,6 +380,14 @@ app.controller('nutritionController', ['$scope', '$q', '$http', 'productSvc', '$
 
             return $scope.promise.promise;
         }
+
+        $scope.$on("updateProduct", function() {
+            productSvc.getProduct(false, function(res) {
+                // //console.log(res);
+                $scope.productList = res;
+                // $scope.propertyList = utilService.getPropertyList($scope.customerList);
+            });
+        });
 
         $scope.init();
     }

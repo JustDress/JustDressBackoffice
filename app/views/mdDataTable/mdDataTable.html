@@ -39,23 +39,73 @@
         <input ng-model="search.notes" placeholder="Search here">
     </md-input-container>
 </md-content>-->
+
+
+
+
+
+
+
+
+
 <md-card style="margin: 5px;padding: 8px 8px 8px 24px;width: 70%;float: right;" ng-if="openFilter">
-    <div layout="row" layout-wrap class="checkboxes">
-        <md-checkbox ng-model="options.rowSelection">Row Selection</md-checkbox>
+    <div layout="row" layout-wrap class="checkboxes" style="height: 75px;">
+        <!--<md-checkbox ng-model="options.rowSelection">Row Selection</md-checkbox>
         <md-checkbox ng-model="options.multiSelect">Multiple Selection</md-checkbox>
         <md-checkbox ng-model="options.autoSelect">Auto Selection</md-checkbox>
         <md-checkbox ng-model="options.decapitate">Decapitate</md-checkbox>
         <md-checkbox ng-model="options.largeEditDialog">Lard Edit Dialogs</md-checkbox>
         <md-checkbox ng-model="options.boundaryLinks">Pagination Boundary Links</md-checkbox>
         <md-checkbox ng-model="options.limitSelect" ng-click="toggleLimitOptions()">Pagination Limit Select</md-checkbox>
-        <md-checkbox ng-model="options.pageSelect">Pagination Page Select</md-checkbox>
+        <md-checkbox ng-model="options.pageSelect">Pagination Page Select</md-checkbox>-->
+        <md-input-container class="md-block" flex-gt-sm>
+            <label style="color: #2A3F54;font-size: 1.1em;">Nome</label>
+            <input ng-model="filter.nome">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+            <label style="color: #2A3F54;font-size: 1.1em;">Prezzo</label>
+            <input name="prezzo" ng-model="filter.prezzo" type="number" required>
+
+            <!--<div ng-messages="filterForm.postalCode.$error" role="alert" multiple>
+                            <div ng-message="required" class="my-message">You must supply a postal code.</div>
+                            <div ng-message="pattern" class="my-message">That doesn't look like a valid postal code.
+                            </div>
+                            <div ng-message="md-maxlength" class="my-message">
+                                Don't use the long version silly...we don't need to be that specific...
+                            </div>
+                        </div>-->
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+            <label style="color: #2A3F54;font-size: 1.4em;">Quantità</label>
+            <input name="quantita" ng-model="filter.quantita" required type="number" />
+
+        </md-input-container>
+    </div>
+
+    <div layout-gt-sm="row" style="height: 80px;">
+        <md-input-container class="md-block" flex-gt-sm>
+            <label style="color: #2A3F54;font-size: 1.1em;">Sesso</label>
+            <input ng-model="filter.sesso">
+        </md-input-container>
+
+        <md-input-container class="md-block" flex-gt-sm>
+            <label style="color: #2A3F54;font-size: 1.4em;" style="color: #2A3F54;font-size: 1.2em;">Categoria</label>
+            <md-select ng-model="filter.categoria">
+                <md-option ng-repeat="categ in categorie" value="{{categ.id}}">
+                    {{categ.nome}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+    <div layout-gt-sm="row">
+        <md-button style="width: 20%;margin-left: 0;" ng-click="filterList()" class="md-raised md-primary">Filter</md-button>
     </div>
 </md-card>
 
 
 <div class="row" style="width: 70%;float: right">
     <md-toolbar class="md-table-toolbar md-default" ng-show="!options.rowSelection || !selected.length">
-        <div class="md-toolbar-tools" ng-if="!openSearch">
+        <div class="md-toolbar-tools" ng-if="!openSearch && !selected.length">
             <span>Nutrition</span>
             <span flex="" class="flex"></span>
             <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="loadStuff()">
@@ -68,10 +118,11 @@
       <md-icon class="material-icons" style="color: black" ng-click="toggleSearch()">&#xE8B6;</md-icon>
     </button>
         </div>
-        <div class="md-toolbar-tools" ng-if="openSearch">
+
+        <div class="md-toolbar-tools" ng-if="openSearch && !selected.length">
             <md-input-container style="padding-bottom: 0; margin-bottom: 0;margin-top: 32px;">
                 <md-icon class="material-icons">&#xE8B6;</md-icon>
-                <input ng-model="search.notes" placeholder="Search here">
+                <input ng-model="search.name" placeholder="Search here">
             </md-input-container>
             <span flex="" class="flex"></span>
             <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="loadStuff()">
@@ -84,11 +135,22 @@
       <md-icon class="material-icons" style="color: black" ng-click="toggleSearch()">close</md-icon>
     </button>
         </div>
+
+        <md-toolbar class="md-table-toolbar alternate" ng-if="selected.length">
+            <div class="md-toolbar-tools">
+                <span>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</span>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="deleteProduct()">
+                    <md-icon>delete</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
     </md-toolbar>
 
     <!-- exact table from live demo -->
     <md-table-container>
-        <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+        <table md-table md-row-select multiple ng-model="selected" ng-change="selection()" md-progress="promise">
             <thead md-head md-order="query.order" md-on-reorder="getQuery">
                 <tr md-row>
                     <!--<th md-column md-order-by="nameToLower"><span>Dessert (100g serving)</span></th>
@@ -101,9 +163,9 @@
                     <th md-column md-numeric>Iron (%)</th>-->
                     <th md-column md-order-by="nome"><span>Nome</span></th>
                     <th md-column md-numeric md-order-by="categoria"><span>Categoria</span></th>
-                    <th md-column md-order-by="sesso" md-numeric>Sesso</th>
-                    <th md-column md-order-by="prezzo" md-numeric>Prezzo</th>
-                    <th md-column md-order-by="descrizione" md-numeric>Descrizione</th>
+                    <th md-column md-order-by="sesso">Sesso</th>
+                    <th md-column md-order-by="prezzo">Prezzo</th>
+                    <th md-column md-order-by="descrizione">Descrizione</th>
                 </tr>
             </thead>
             <tbody md-body>
@@ -117,9 +179,11 @@
                     <td md-cell>{{dessert.calcium.value}}{{dessert.calcium.unit}}</td>
                     <td md-cell>{{dessert.iron.value}}{{dessert.iron.unit}}</td>
                 </tr>-->
-                <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="prod in productList | limitTo:query.limit | orderBy:query.order">
+                <tr md-row md-select="prod" md-select-id="_id" md-auto-select ng-repeat="prod in productList
+                 | limitTo:query.limit : (query.page - 1) * query.limit | 
+                orderBy:query.order | filter:search.name">
                     <td md-cell>{{prod.nome}}</td>
-                    <td md-cell>{{prod.categoria}}</td>
+                    <td md-cell>{{getCategoryDescription(prod.categoria)}}</td>
                     <td md-cell>{{prod.sesso}}</td>
                     <td md-cell>{{prod.prezzo}}</td>
                     <td md-cell>{{prod.descrizione}}</td>
