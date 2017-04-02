@@ -1,0 +1,66 @@
+<!--<md-dialog aria-label="Mango (Fruit)">
+    <md-content class="md-padding">
+        <form name="clientForm">
+            <div layout layout-sm="column">
+                <md-input-container flex>
+                    <label>SKU</label>
+                    <input ng-model="model.product._id">
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Nome</label>
+                    <input ng-model="model.product.nome">
+                </md-input-container>
+            </div>
+            <md-input-container flex>
+                <label>Colore</label>
+                <input ng-model="model.product.categoria">
+            </md-input-container>
+            <div layout layout-sm="column">
+                <md-input-container flex>
+                    <label>Sesso</label>
+                    <input ng-model="model.product.sesso">
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Prezzo</label>
+                    <input ng-model="model.product.prezzo">
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Descrizione</label>
+                    <input ng-model="model.product.descrizione">
+                </md-input-container>
+            </div>
+        </form>
+    </md-content>
+    <div class="md-actions" layout="row">
+        <span flex></span>
+        <md-button ng-click="answer()"> Reset </md-button>
+        <md-button ng-click="edit()" class="md-primary"> Modifica </md-button>
+    </div>
+</md-dialog>-->
+<md-dialog aria-label="Mango (Fruit)" style="height: 100%;width: 40%">
+    <div class="row">
+        <md-toolbar layout="row" class="md-hue-3">
+            <div class="md-toolbar-tools">
+                <span>Scegli il prodotto da modificare</span>
+            </div>
+        </md-toolbar>
+
+        <md-content>
+            <md-list flex>
+                <md-subheader class="md-no-sticky">Prodotti</md-subheader>
+                <md-list-item class="md-2-line" ng-repeat="prod in model.product" ng-click="doPrimaryAction(prod)" ng-style="prod.isSelected && {'background-color':'rgba(97, 90, 90, 0.2)'}">
+
+                    <div class="md-list-item-text" ng-class="{'md-offset': phone.options.offset }">
+                        <h3> {{prod.nome }} </h3>
+                        <p> {{ prod.descrizione }} </p>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
+    <div class="md-actions" layout="row">
+        <span flex></span>
+        <md-button ng-click="answer()"> Reset </md-button>
+        <md-button ng-click="edit()" class="md-primary"> Vai a Modifica </md-button>
+    </div>
+</md-dialog>

@@ -19,7 +19,21 @@ app.factory('productSvc', ['$http',
                 });
         }
 
-        //get all products
+        //edit product
+        fc.addProduct = function(product, spinner, callback) {
+                if (spinner) {
+                    //to do: add spinner
+                }
+                return $http.put('/api/product', { product: product }).success(function(data) {
+                        console.log(data);
+                        callback(data);
+                    })
+                    .error(function(data) {
+                        console.log('Error: ' + data);
+                        callback(data);
+                    });
+            }
+            //get all products
         fc.getProduct = function(spinner, callback) {
             if (spinner) {
                 //to do: add spinner

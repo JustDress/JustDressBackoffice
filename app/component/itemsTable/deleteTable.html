@@ -1,0 +1,13 @@
+<md-toolbar class="md-table-toolbar alternate" ng-if="$ctrl.selected.length">
+    <div class="md-toolbar-tools">
+        <span>{{$ctrl.selected.length}} {{$ctrl.selected.length > 1 ? 'items' : 'item'}} selected</span>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="$ctrl.deleteProduct()">
+            <md-icon>delete</md-icon>
+        </md-button>
+        <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="$ctrl.showEdit()" aria-label="local_dining">
+      <md-icon class="material-icons">edit</md-icon>
+    <div class="md-ripple-container"></div></button>
+
+    </div>
+</md-toolbar>

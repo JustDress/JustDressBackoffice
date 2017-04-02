@@ -189,8 +189,8 @@
 
 
 
-app.controller('nutritionController', ['$scope', '$q', '$http', 'productSvc', '$timeout', 'TOASTRUTIL',
-    function($scope, $q, $http, productSvc, $timeout, TOASTRUTIL) {
+app.controller('nutritionController', ['$scope', '$q', '$http', 'productSvc', '$timeout', 'TOASTRUTIL', '$mdDialog',
+    function($scope, $q, $http, productSvc, $timeout, TOASTRUTIL, $mdDialog) {
         'use strict';
 
         toastr.options = TOASTRUTIL.options;
@@ -243,28 +243,50 @@ app.controller('nutritionController', ['$scope', '$q', '$http', 'productSvc', '$
 
             // console.log($scope.filter);
             // console.log(checkNullFilter());
-            if (checkNullFilter())
-                return;
-            console.log('passa');
-            if (deleteNullFilterProperty()) {
-                console.log(initialProductList);
+            // if (checkNullFilter())
+            //     return;
+            // console.log('passa');
+            // if (deleteNullFilterProperty()) {
+            //     console.log(initialProductList);
 
-                $scope.productList = _.where(initialProductList, $scope.filter);
-            } else {
-                // var filterNotNull = getFilterNotNull();
-                console.log(initialProductList);
-                // console.log(filterNotNull)
-                $scope.productList = initialProductList.filter(checkFilter);
+            //     $scope.productList = _.where(initialProductList, $scope.filter);
+            // } else {
+            //     // var filterNotNull = getFilterNotNull();
+            //     console.log(initialProductList);
+            // console.log(filterNotNull)
+            $scope.productList = initialProductList.filter(checkFilter);
 
-                console.log($scope.productList);
-                // $scope.$apply();
-                // var filter = $.grep($scope.productList, function(prod) {
-                //     return
-                //     prod.nome == $scope.filter.nome
-                // })
-            }
+            console.log($scope.productList);
+            // $scope.$apply();
+            // var filter = $.grep($scope.productList, function(prod) {
+            //     return
+            //     prod.nome == $scope.filter.nome
+            // })
+            // }
         }
 
+        $scope.showEdit = function() {
+            console.log($scope.selected);
+            $mdDialog.show({
+                    controller: 'DialogController',
+                    //template: '<md-dialog aria-label="Mango (Fruit)"><md-content class="md-padding"><form name="clientForm"><div layout layout-sm="column"><md-input-container flex><label>Id</label><input ng-model="client.id"></md-input-container> <md-input-container flex><label>Nome</label><input ng-model="client.nome"></md-input-container></div><md-input-container flex><label>Citt�</label><input ng-model="client.citta"></md-input-container><div layout layout-sm="column"><md-input-container flex><label>Indirizzo</label><input ng-model="client.indirizzo"></md-input-container><md-input-container flex><label>Sesso</label><input ng-model="client.sesso"></md-input-container><md-input-container flex><label>Et�</label><input ng-model="client.eta"></md-input-container></div><md-datepicker ng-model="client.data" md-placeholder="Enter date"></md-datepicker></form></md-content><div class="md-actions" layout="row"><span flex></span><md-button ng-click="answer()"> Reset </md-button><md-button ng-click="submit()" class="md-primary"> Aggiungi </md-button></div></md-dialog>',
+                    templateUrl: 'app/component/productList/dialogEditProdotto.html',
+                    // targetEvent: ev,
+                    resolve: {
+                        $dataObj: function() {
+                            return {
+                                product: $scope.selected
+                            }
+                        }
+                    }
+                })
+                .then(function(answer) {
+
+                    // $scope.alert = 'You said the information was "' + answer + '".';
+                }, function() {
+                    // $scope.alert = 'You cancelled the dialog.';
+                });
+        };
         // function getFilterNotNull() {
         //     console.log(returnNullFilter())
         //     _.omit($scope.filter, returnNullFilter());
@@ -289,7 +311,7 @@ app.controller('nutritionController', ['$scope', '$q', '$http', 'productSvc', '$
         }
 
 
-        //todo: trovare un modo per non cancellare definitivamente le proprietà del filtro
+        //todo: trovare un modo per non cancellare definitivamente le proprietà del filtro (oppure evitare il secondo tipo di filtro)
         function deleteNullFilterProperty() {
             var hasNullValue = false;
             // _.keys({ one: 1, two: 2, three: 3 })

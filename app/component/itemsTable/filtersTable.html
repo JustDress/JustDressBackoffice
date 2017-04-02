@@ -1,0 +1,53 @@
+<md-card style="margin: 5px;padding: 8px 8px 8px 24px;width: 70%;float: right;" ng-if="$ctrl.openFilter">
+    <div layout="row" layout-wrap class="checkboxes" style="height: 75px;">
+        <!--<md-checkbox ng-model="options.rowSelection">Row Selection</md-checkbox>
+        <md-checkbox ng-model="options.multiSelect">Multiple Selection</md-checkbox>
+        <md-checkbox ng-model="options.autoSelect">Auto Selection</md-checkbox>
+        <md-checkbox ng-model="options.decapitate">Decapitate</md-checkbox>
+        <md-checkbox ng-model="options.largeEditDialog">Lard Edit Dialogs</md-checkbox>
+        <md-checkbox ng-model="options.boundaryLinks">Pagination Boundary Links</md-checkbox>
+        <md-checkbox ng-model="options.limitSelect" ng-click="toggleLimitOptions()">Pagination Limit Select</md-checkbox>
+        <md-checkbox ng-model="options.pageSelect">Pagination Page Select</md-checkbox>-->
+        <md-input-container class="md-block" flex-gt-sm>
+            <label style="color: #2A3F54;font-size: 1.1em;">Nome</label>
+            <input ng-model="$ctrl.filter.nome">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+            <label style="color: #2A3F54;font-size: 1.1em;">Prezzo</label>
+            <input name="prezzo" ng-model="$ctrl.filter.prezzo" type="number" required>
+
+            <!--<div ng-messages="$ctrl.filterForm.postalCode.$error" role="alert" multiple>
+                            <div ng-message="required" class="my-message">You must supply a postal code.</div>
+                            <div ng-message="pattern" class="my-message">That doesn't look like a valid postal code.
+                            </div>
+                            <div ng-message="md-maxlength" class="my-message">
+                                Don't use the long version silly...we don't need to be that specific...
+                            </div>
+                        </div>-->
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+            <label style="color: #2A3F54;font-size: 1.4em;">Quantità</label>
+            <input name="quantita" ng-model="$ctrl.filter.quantita" required type="number" />
+
+        </md-input-container>
+    </div>
+
+    <div layout-gt-sm="row" style="height: 80px;">
+        <md-input-container class="md-block" flex-gt-sm>
+            <label style="color: #2A3F54;font-size: 1.1em;">Sesso</label>
+            <input ng-model="$ctrl.filter.sesso">
+        </md-input-container>
+
+        <md-input-container class="md-block" flex-gt-sm>
+            <label style="color: #2A3F54;font-size: 1.4em;" style="color: #2A3F54;font-size: 1.2em;">Categoria</label>
+            <md-select ng-model="$ctrl.filter.categoria">
+                <md-option ng-repeat="categ in $ctrl.categorie" value="{{categ.id}}">
+                    {{categ.nome}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+    <div layout-gt-sm="row">
+        <md-button style="width: 20%;margin-left: 0;" ng-click="$ctrl.filterList()" class="md-raised md-primary">Filter</md-button>
+    </div>
+</md-card>
