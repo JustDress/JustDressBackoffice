@@ -41,10 +41,13 @@
 </md-content>-->
 
 
-
 <filters-table open-filter="openFilter" filter="filter" categorie="categorie" on-filter="filterList()"></filters-table>
 
 <div class="row" style="width: 70%;float: right">
+
+    <md-button class="md-raised" ng-click="showActionToast()">
+        Show With Action
+    </md-button>
     <md-toolbar class="md-table-toolbar md-default" ng-show="!options.rowSelection || !selected.length">
         <div class="md-toolbar-tools" ng-if="!openSearch && !selected.length">
             <span>Products</span>

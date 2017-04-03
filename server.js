@@ -85,20 +85,25 @@ router.route('/product/:product_id')
 
 .put(function(req, res) {
 
+    console.log(req);
     // use our bear model to find the bear we want
     Product.findById(req.params.product_id, function(err, product) {
-
         if (err)
             res.send(err);
 
-        product.nome = req.body.nome; // update the bears info
+        product.nome = req.body.product.nome; // update the bears info
+        product.prezzo = req.body.product.prezzo;
+        product.sesso = req.body.product.sesso;
+        product.categoria = req.body.product.categoria;
+        product.descrizione = req.body.product.descrizione;
+        product.isSelected = false;
 
         // save the bear
         product.save(function(err) {
             if (err)
                 res.send(err);
 
-            res.json({ message: 'product updated!' });
+            res.json(product);
         });
 
     });

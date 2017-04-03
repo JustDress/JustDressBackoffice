@@ -20,11 +20,11 @@ app.factory('productSvc', ['$http',
         }
 
         //edit product
-        fc.addProduct = function(product, spinner, callback) {
+        fc.editProduct = function(product, spinner, callback) {
                 if (spinner) {
                     //to do: add spinner
                 }
-                return $http.put('/api/product', { product: product }).success(function(data) {
+                return $http.put('/api/product/' + product._id, { product: product }).success(function(data) {
                         console.log(data);
                         callback(data);
                     })
